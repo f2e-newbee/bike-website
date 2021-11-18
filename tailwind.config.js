@@ -18,6 +18,19 @@ module.exports = {
         pink: "#F699B3",
         orange: "#F1884E",
       },
+      letterSpacing: {
+        widest: ".5em",
+      },
+      minWidth: {
+        "3/4": "75%",
+        90: "90%",
+      },
+      minHeight: {
+        "3/4": "75%",
+      },
+      inset: {
+        "1/5": "20%",
+      },
     },
   },
   variants: {
