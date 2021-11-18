@@ -5,35 +5,27 @@ export const RouteQuery = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-      fetchApi("v2/Bike/Station/Taichung", {
-        $top: 30,
-        $format: "JSON",
-      }).then((response) => {
-        console.log(response);
-        setData(response.data);
-      });
+    fetchApi("v2/Bike/Station/Taichung", {
+      $top: 30,
+      $format: "JSON",
+    }).then((response) => {
+      console.log(response);
+      setData(response.data);
+    });
   }, []);
-  
+
   return (
     <div>
       路線查詢
-      {
-        data && data.map(item =>{
-          return(
+      {data &&
+        data.map((item) => {
+          return (
             <div key={item.StationID}>
-              <div>
-                {item.StationName.Zh_tw}
-              </div>
-              <div>
-                {item.StationAddress.Zh_tw}
-              </div>
-           </div>
-          )
-        })
-      }
-      
+              <div>{item.StationName.Zh_tw}</div>
+              <div>{item.StationAddress.Zh_tw}</div>
+            </div>
+          );
+        })}
     </div>
   );
 };
-
-export default RouteQuery;

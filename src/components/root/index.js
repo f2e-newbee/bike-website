@@ -5,13 +5,11 @@ import { ReactComponent as Cell3Icon } from "../../assets/img/cell-3.svg";
 import { ReactComponent as Cell4Icon } from "../../assets/img/cell-4.svg";
 import { ReactComponent as Cell5Icon } from "../../assets/img/cell-5.svg";
 import { ReactComponent as Cell6Icon } from "../../assets/img/cell-6.svg";
-import { Home, RentBikeQuery, RouteQuery } from "../../pages";
-import { Routes, Route } from "react-router-dom";
-
+import { Outlet } from "react-router";
 /**
  * 背景軟泥圖
  */
-const BackGround = () => {
+const Root = () => {
   return (
     <div className="h-full bg-beige overflow-hidden relative md:overflow-hidden">
       <Cell1Icon className="absolute right-0 transform md:translate-x-1/3 md:-translate-y-1/3 translate-x-1/2 -translate-y-1/2" />
@@ -20,13 +18,9 @@ const BackGround = () => {
       <Cell4Icon className="absolute left-0 transform translate-x-36 translate-y-16 hidden md:block" />
       <Cell5Icon className="absolute left-0 transform -translate-x-1/3 translate-y-32" />
       <Cell6Icon className="absolute left-0 bottom-0 transform -translate-x-10 translate-y-20" />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/rent-bike-query" element={<RentBikeQuery />} />
-        <Route path="/route-query" element={<RouteQuery />} />
-      </Routes>
+      <Outlet/>
     </div>
   );
 };
 
-export default BackGround;
+export default Root;
