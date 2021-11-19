@@ -16,12 +16,12 @@ export const Home = () => {
           所有你需要的單車資訊
         </h6>
         <Stack direction="row" spacing={6} justifyContent="center">
+          <Block label="路線查詢" icon={<RouteIcon />} link="/route-query" />
           <Block
-            label="路線查詢"
-            icon={<RouteIcon />}
+            label="單車租借查詢"
+            icon={<BikeIcon />}
             link="/rent-bike-query"
           />
-          <Block label="單車租借查詢" icon={<BikeIcon />} link="/route-query" />
         </Stack>
       </div>
     </div>
