@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/Store";
-import Root from "./components/root";
+import Root from "./layout/root";
 import { Home, RentBikeQuery, RouteQuery, ErrorPage } from "./pages";
 
 const App = () => {

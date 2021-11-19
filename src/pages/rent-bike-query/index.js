@@ -1,7 +1,11 @@
 import React from "react";
+import Toggle from "../../components/toggle";
 
 export const RentBikeQuery = () => {
-  return <div>單車租借查詢</div>;
+  return (
+    <div>
+      <Toggle />
+      單車租借查詢
+    </div>
+  );
 };
-
-

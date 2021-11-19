@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchApi } from "../../service/Service";
-
+import Toggle from "../../components/toggle";
 export const RouteQuery = () => {
   const [data, setData] = useState([]);
 
@@ -16,6 +16,7 @@ export const RouteQuery = () => {
 
   return (
     <div>
+      <Toggle />
       路線查詢
       {data &&
         data.map((item) => {
