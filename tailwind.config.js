@@ -21,6 +21,9 @@ module.exports = {
       letterSpacing: {
         widest: ".5em",
       },
+      maxWidth: {
+        800: '800px'
+      },
       minWidth: {
         "3/4": "75%",
         90: "90%",

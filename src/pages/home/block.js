@@ -5,7 +5,7 @@ const Block = ({ label, icon, link }) => {
   return (
     <div className="flex flex-col items-center">
       <Link to={link}>
-        <div className="border-4 rounded-xl inline-block border-primary p-6 cursor-pointer">
+        <div className="block-button border-4 rounded-xl inline-block border-primary p-6 cursor-pointer">
           <div className="text-primary">{icon}</div>
         </div>
       </Link>
@@ -15,3 +15,4 @@ const Block = ({ label, icon, link }) => {
 };
 
 export default Block;
+ 
