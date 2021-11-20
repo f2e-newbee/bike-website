@@ -6,8 +6,9 @@ import { ReactComponent as Cell4Icon } from "../../assets/img/cell-4.svg";
 import { ReactComponent as Cell5Icon } from "../../assets/img/cell-5.svg";
 import { ReactComponent as Cell6Icon } from "../../assets/img/cell-6.svg";
 import { ReactComponent as Cell7Icon } from "../../assets/img/cell-7.svg";
-
+import MobileBottomNav from "../../components/MobileBottomNav";
 import { Outlet } from "react-router";
+
 /**
  * 背景軟泥圖
  */
@@ -21,7 +22,8 @@ const Root = () => {
       <Cell5Icon className="absolute left-0 transform -translate-x-1/3 translate-y-32" />
       <Cell6Icon className="absolute left-0 bottom-0 transform -translate-x-10 translate-y-20" />
       <Cell7Icon className="absolute left-1/4	 bottom-1/4 transform -translate-x-10 translate-y-20 hidden md:block" />
-      <Outlet/>
+      <Outlet />
+      <MobileBottomNav />
     </div>
   );
 };
