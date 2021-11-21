@@ -5,10 +5,10 @@ import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import { Paper, Stack } from "@material-ui/core";
 import Toggle from "../../components/toggle";
 import SearchBar from "../../components/searchBar/SearchBar";
-import CustomTabs from "../../components/Tabs";
 import getGeoLocation from "../../service/GeolocationService";
 import SelectCity from "../../components/SelectCity";
 import BikeTab from "./BikeTab";
+import Map from "./Map";
 
 export const RentBikeQuery = () => {
   /** 偵測螢幕寬度 */
@@ -162,7 +162,10 @@ export const RentBikeQuery = () => {
                   handleSearch={handleSearch}
                 />
               </div>
-              <div className="bg-gray-100  row-span-9  rounded-3xl hidden md:block"></div>
+              <div className="bg-gray-100  row-span-9  rounded-3xl hidden md:block">
+                {/* {location && <Map center={location} />} */}
+                {location && filterList &&filterList.length > 0 && <Map center={location} list={filterList}/> }
+              </div>
               <div className="bg-yellow-custom row-span-6  rounded-3xl p-5 h-full overflow-y-scroll sm:grid hidden">
                 <p>
                   共{" "}
