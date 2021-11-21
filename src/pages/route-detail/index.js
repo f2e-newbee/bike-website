@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { fetchApi } from "../../service/Service";
 import { ReactComponent as RouteIcon } from "../../assets/img/route.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import { ReactComponent as LeftArrow } from "../../assets/img/left-arrow.svg";
 
 import { Stack } from "@material-ui/core";
-import { Link , useParams , useLocation } from "react-router-dom";
+import { Link , useParams  } from "react-router-dom";
 import Toggle from "../../components/toggle";
 
 
 
 export const RouteDetail = () => {
-  const { state } = useLocation();
   let { pathName } = useParams();
   const [routeName, setRouteName] = useState('');
-
   
   useEffect(() => {
     setRouteName(pathName);
