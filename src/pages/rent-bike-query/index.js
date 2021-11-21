@@ -6,6 +6,7 @@ import { Paper, Stack, Tabs, Tab } from "@material-ui/core";
 import Toggle from "../../components/toggle";
 import SearchBar from "../../components/searchBar/SearchBar";
 import getGeoLocation from "../../service/GeolocationService";
+import SelectCity from "../../components/SelectCity";
 
 /** TabPanel */
 const TabPanel = (props) => {
@@ -36,11 +37,12 @@ export const RentBikeQuery = () => {
   const [location, setLocation] = useState(null);
   const [stationData, setStationData] = useState(null);
   const [availability, setAvailability] = useState(null);
+  const [keyWord, setKeyWord] = useState("");
+  const [city, setCity] = useState("");
   // 兩支api資料結合List
   const [list, setList] = useState([]);
   // 依照關鍵字搜尋的list
   const [filterList, setFilterList] = useState([]);
-  const [keyWord, setKeyWord] = useState("");
   // 一進頁面先取得使用者地理位置
   useEffect(() => {
     getGeoLocation().then(
@@ -55,22 +57,13 @@ export const RentBikeQuery = () => {
 
   useEffect(() => {
     if (location) {
-      fetchApi(
-        `/v2/Bike/Station/NearBy?$top=10&$spatialFilter=nearby(${location.latitude}, ${location.longitude}, ${DISTANCE})&$format=JSON`
-      ).then((response) => {
-        if (response && response.status === 200) {
-          setStationData(response.data);
-        }
-      });
-      fetchApi(
-        `/v2/Bike/Availability/NearBy?$top=10&$spatialFilter=nearby(${location.latitude}, ${location.longitude}, ${DISTANCE})&$format=JSON`
-      ).then((response) => {
-        if (response && response.status === 200) {
-          setAvailability(response.data);
-        }
-      });
+      if (city) {
+        getCity();
+      } else {
+        getNearBy();
+      }
     }
-  }, [location]);
+  }, [location, city]);
 
   useEffect(() => {
     if (availability && stationData) {
@@ -94,6 +87,24 @@ export const RentBikeQuery = () => {
     }
   }, [keyWord, list]);
 
+  function getNearBy() {
+    setCity("");
+    fetchApi(
+      `/v2/Bike/Station/NearBy?$top=10&$spatialFilter=nearby(${location.latitude}, ${location.longitude}, ${DISTANCE})&$format=JSON`
+    ).then((response) => {
+      if (response && response.status === 200) {
+        setStationData(response.data);
+      }
+    });
+    fetchApi(
+      `/v2/Bike/Availability/NearBy?$top=10&$spatialFilter=nearby(${location.latitude}, ${location.longitude}, ${DISTANCE})&$format=JSON`
+    ).then((response) => {
+      if (response && response.status === 200) {
+        setAvailability(response.data);
+      }
+    });
+  }
+
   function handleSearch() {
     if (keyWord && keyWord.trim()) {
       const filter = list.filter((item) => {
@@ -101,6 +112,23 @@ export const RentBikeQuery = () => {
       });
       setFilterList(filter);
     }
+  }
+
+  function getCity() {
+    fetchApi(`/v2/Bike/Station/${city}?$top=15&format=JSON`).then(
+      (response) => {
+        if (response && response.status === 200) {
+          setStationData(response.data);
+        }
+      }
+    );
+    fetchApi(`/v2/Bike/Availability/${city}?$top=15&$format=JSON`).then(
+      (response) => {
+        if (response && response.status === 200) {
+          setAvailability(response.data);
+        }
+      }
+    );
   }
 
   return (
@@ -131,13 +159,16 @@ export const RentBikeQuery = () => {
                   <BikeIcon className="w-6 h-6" />
                   <span>單車租借查詢</span>
                 </Stack>
-                <div className="flex mb-4">
-                  <button className="bg-tertiary sm:px-6 px-2 sm:py-2 py-1 rounded-3xl text-white font-bold  sm:w-28 w-24">
+                <div className="flex mb-4 items-center">
+                  <button
+                    className="bg-tertiary sm:px-6 px-2 sm:py-2 py-1 rounded-3xl text-white font-bold  sm:w-28 w-24"
+                    onClick={getNearBy}
+                  >
                     離我最近
                   </button>
-                  <button className="bg-gray-50 sm:px-6 px-2 sm:py-2 py-1 rounded-3xl text-gray-700 font-bold ml-4 sm:w-32 w-28">
-                    下拉式選單
-                  </button>
+                  <div className=" ml-4 sm:w-32 w-28 flex">
+                    <SelectCity city={city} setCity={setCity} />
+                  </div>
                 </div>
                 <SearchBar
                   setKeyWord={setKeyWord}
