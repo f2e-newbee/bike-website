@@ -43,6 +43,12 @@ body .css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
 body .css-1ujnqem-MuiTabs-root{
   min-height: 36px;
 }
+body .css-1mbunh-MuiPaper-root{
+  cursor: pointer;
+}
+body .css-1mbunh-MuiPaper-root:hover{
+  background-color: #fffae7;
+}
 body .css-1aquho2-MuiTabs-indicator{
   display: none;
 }

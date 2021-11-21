@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./store/Store";
 import Root from "./layout/root";
-import { Home, RentBikeQuery, RouteQuery, ErrorPage } from "./pages";
+import { Home, RentBikeQuery, RouteQuery,RouteDetail, ErrorPage } from "./pages";
 
 const App = () => {
   return (
@@ -11,9 +11,12 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Root />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/rent-bike-query" element={<RentBikeQuery />} />
-            <Route path="/route-query" element={<RouteQuery />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/rent-bike-query" element={<RentBikeQuery />} />
+              <Route path="/route-detail" element={<RouteDetail />}>
+                <Route path=":pathName" element={<RouteDetail />} />
+              </Route>
+              <Route path="/route-query" element={<RouteQuery />} />
           </Route>
           <Route path="*"  element={<ErrorPage />} />
         </Routes>

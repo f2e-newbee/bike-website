@@ -7,13 +7,15 @@ import Toggle from "../../components/toggle";
 import SearchBar from "../../components/searchBar/SearchBar";
 import CustomTabs from "../../components/Tabs";
 import SelectCity from "../../components/SelectCity";
-
+import { Link, useNavigate } from "react-router-dom";
 
 
 export const RouteQuery = () => {
   /** 偵測螢幕寬度 */
   let screenWidth = Number(document.body.clientWidth);
   window.addEventListener("resize", function(event) {});
+
+  const navigate = useNavigate();
 
   const [routeData, setRouteData] = useState(null);
   const [keyWord, setKeyWord] = useState("");
@@ -63,6 +65,10 @@ export const RouteQuery = () => {
     }
   }
 
+  function goToDetailPage(item) {
+    navigate(`/route-detail/${item.RouteName}`, { state: { id: 7 }});
+  }
+
   return (
     <>
     <div className="z-10 relative px-4">
@@ -82,20 +88,20 @@ export const RouteQuery = () => {
               <RouteIcon className="w-6 h-6" />
               <span>路線查詢</span>
             </Stack>
-              <div className="flex mb-4">
-                {/* <button className="bg-purple-custom sm:px-6 px-2 sm:py-2 py-1 rounded-3xl text-white font-bold  sm:w-28 w-24">離我最近</button> */}
-                  <div className="sm:w-32 w-28 flex">
-                    <SelectCity city={city} setCity={setCity} />
-                  </div>
-                  {
-                    city ? null :   <p className="text-red-500 ml-4">**請選擇縣市**</p>
-                  }
-              </div>
-              <SearchBar
-                  setKeyWord={setKeyWord}
-                  keyWord={keyWord}
-                  handleSearch={handleSearch}
-                />
+            <div className="flex mb-4">
+              {/* <button className="bg-purple-custom sm:px-6 px-2 sm:py-2 py-1 rounded-3xl text-white font-bold  sm:w-28 w-24">離我最近</button> */}
+                <div className="sm:w-32 w-28 flex">
+                  <SelectCity city={city} setCity={setCity} />
+                </div>
+                {
+                  city ? null :   <p className="text-red-500 ml-4">**請選擇縣市**</p>
+                }
+            </div>
+            <SearchBar
+                setKeyWord={setKeyWord}
+                keyWord={keyWord}
+                handleSearch={handleSearch}
+              />
             </div>
             <div className="bg-gray-100  row-span-9  rounded-3xl hidden md:block">
             </div>
@@ -104,7 +110,7 @@ export const RouteQuery = () => {
                 {
                   filterList &&  filterList.length > 0 ?
                   filterList.map((item,index) =>{
-                    return <RouteDataCard data={item} key={`${item.RouteName}${index}`} />
+                    return <RouteDataCard data={item} key={`${item.RouteName}${index}`} goToDetailPage={goToDetailPage} />
                   })
                   : "查無資料QAQ"
                 }
@@ -122,22 +128,22 @@ export const RouteQuery = () => {
 };
 
 
-const RouteDataCard  = ({data}) =>{
+const RouteDataCard  = ({ data, goToDetailPage}) =>{
   return(
-    <Paper className="w-full min-h-24 my-2 p-4" elevation={2} >
-      <div className="flex justify-between	h-full"> 
-        <div>
-          <h3 className="font-bold text-gray-500">{data.RouteName}</h3>
-          <p className="text-gray-400 text-sm">起點: {data.RoadSectionStart}</p>
-          <p className="text-gray-400 text-sm	">終點: {data.RoadSectionEnd}</p>
-          {
-            data.CyclingLength > 1000 ? 
-            <p className="text-primary text-sm	">全長: {Math.round(data.CyclingLength / 100, -1)} 公里</p>
-            :
-            <p className="text-green text-sm	">全長: <span className="text-green-400">{data.CyclingLength}</span>公尺</p>
-          }
-        </div>
-      </div>
-    </Paper>
+      <Paper className="w-full min-h-24 my-2 p-4" elevation={2} >
+          <div className="flex justify-between	h-full" onClick={()=> goToDetailPage(data)}> 
+            <div>
+              <h3 className="font-bold text-gray-500">{data.RouteName}</h3>
+              <p className="text-gray-400 text-sm">起點: {data.RoadSectionStart}</p>
+              <p className="text-gray-400 text-sm	">終點: {data.RoadSectionEnd}</p>
+              {
+                data.CyclingLength > 1000 ? 
+                <p className="text-primary text-sm	">全長: {Math.round(data.CyclingLength / 100, -1)} 公里</p>
+                :
+                <p className="text-green text-sm	">全長: <span className="text-green-400">{data.CyclingLength}</span>公尺</p>
+              }
+            </div>
+          </div>
+      </Paper>
   )
 }
