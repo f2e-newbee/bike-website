@@ -1,35 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ReactComponent as RouteIcon } from "../../assets/img/route.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import { ReactComponent as LeftArrow } from "../../assets/img/left-arrow.svg";
 
 import { Stack } from "@material-ui/core";
-import { Link , useParams  } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Toggle from "../../components/toggle";
 
 
 
 export const RouteDetail = () => {
-  let { pathName } = useParams();
-  const [routeName, setRouteName] = useState('');
-  
-  useEffect(() => {
-    setRouteName(pathName);
-  }, []);
-
-  // function getCity() {
-  //   if(city){
-  //     fetchApi(`/v2/Cycling/Shape/${city}?format=JSON`).then(
-  //       (response) => {
-  //         if (response && response.status === 200) {
-  //           setRouteData(response.data);
-  //         }
-  //       }
-  //     );
-  //   }
-  // }
-
- 
   return (
     <>
     <div className="z-10 relative px-4">
