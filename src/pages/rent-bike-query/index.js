@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { fetchApi } from "../../service/Service";
 import { ReactComponent as BikeIcon } from "../../assets/img/bike.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import { Paper , Stack, Tabs ,Tab } from "@material-ui/core";
 import Toggle from "../../components/toggle";
 import SearchBar from "../../components/searchBar/SearchBar";
+import getGeoLocation from "../../service/GeolocationService";
 
 /** TabPanel */
 const TabPanel = (props) =>{
