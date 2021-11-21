@@ -41,7 +41,7 @@ export const RentBikeQuery = () => {
     <Logo className="absolute w-36 md:hidden block top-0"/>
       <div className="w-full h-screen relative z-10">
         <section className="
-        mx-auto w-full max-w-screen-xl min-h-5/6 h-5/6	sm:bg-white sm:shadow-xl border-gray-200	sm:border
+        mx-auto w-full max-w-screen-xl md:min-h-notebook h-5/6	sm:bg-white sm:shadow-xl border-gray-200	sm:border
         top-2/4 left-2/4  absolute transform -translate-y-2/4 -translate-x-2/4 rounded-3xl md:pb-8 pb-0">
           <div className="md:h-1/5 h-auto pt-10 relative lg:px-20 md:px-12 sm:px-10 px-6 sm:block hidden">
             <Logo className="absolute w-36 md:block hidden"/>

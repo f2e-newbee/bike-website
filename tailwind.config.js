@@ -40,6 +40,7 @@ module.exports = {
       },
       minHeight: {
         "3/4": "75%",
+        "notebook": "680px"
       },
       inset: {
         "1/5": "20%",
