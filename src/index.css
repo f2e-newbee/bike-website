@@ -29,3 +29,26 @@ body,
 .block-button:hover svg path{
   fill: white;
 }
+body .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected{
+  background-color: #1A659E;
+  color: #ffffff;
+}
+body .css-1wf8b0h-MuiTabs-flexContainer{
+  background-color: #c9c9c9;
+}
+body .css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
+  width: 50%;
+  min-height: 36px;
+}
+body .css-1ujnqem-MuiTabs-root{
+  min-height: 36px;
+}
+body .css-1aquho2-MuiTabs-indicator{
+  display: none;
+}
+
+@media screen and (min-width:480px){
+  body .css-1ujnqem-MuiTabs-root{
+    display: none;
+  }
+}

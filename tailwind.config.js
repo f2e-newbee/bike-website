@@ -7,8 +7,10 @@ module.exports = {
       'primary': '#1A659E',
       'secondary': '#F1884E',
       'tertiary': '#26BABA',
+      'tertiary-dark': '#54afb8',
       'purple-custom': '#5D5D9B',
-      'pink-custom': '#F699B3'
+      'pink-custom': '#F699B3',
+      'yellow-custom': '#fff3c8'
      }),
     extend: {
       screens: {

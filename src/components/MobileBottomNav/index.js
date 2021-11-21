@@ -6,7 +6,9 @@ import { Stack } from "@material-ui/core";
 
 const MobileBottomNav = () => {
   return (
-    <div className="bg-white absolute bottom-0 left-0 right-0 block sm:hidden rounded-t-2xl shadow-md">
+    <div className="bg-white absolute 
+    bottom-0 left-0 right-0 block border border-gray-200	
+    sm:hidden rounded-t-2xl shadow-md z-20">
       <div className="grid grid-cols-2">
         <NavLink
           to="/route-query"
