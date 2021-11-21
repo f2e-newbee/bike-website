@@ -1,6 +1,5 @@
 import React from "react";
 import { ReactComponent as SearchIcon } from "../../assets/img/icons-search.svg";
-// import Filter from "../filter/Filter";
 /**
  * 關鍵字搜尋元件
  */
@@ -9,8 +8,7 @@ const SearchBar = ({
   keyWord,
   setKeyWord,
   handleSearch,
-  city,
-  setCity,
+
 }) => {
   return (
     <div className="w-full items-center justify-start text-center flex ">

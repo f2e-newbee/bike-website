@@ -17,4 +17,4 @@ const getGeoLocation = () =>
       }
     );
   });
-export default getGeoLocation
+export default getGeoLocation;
