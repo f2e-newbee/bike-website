@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { fetchApi } from "../../service/Service";
 import { ReactComponent as BikeIcon } from "../../assets/img/bike.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
@@ -27,6 +27,42 @@ export const RentBikeQuery = () => {
   const [list, setList] = useState([]);
   // 依照關鍵字搜尋的list
   const [filterList, setFilterList] = useState([]);
+
+  const getNearBy = useCallback(() => {
+    setCity("");
+    fetchApi(
+      `/v2/Bike/Station/NearBy?$top=10&$spatialFilter=nearby(${location.latitude}, ${location.longitude}, ${DISTANCE})&$format=JSON`
+    ).then((response) => {
+      if (response && response.status === 200) {
+        setStationData(response.data);
+      }
+    });
+    fetchApi(
+      `/v2/Bike/Availability/NearBy?$top=10&$spatialFilter=nearby(${location.latitude}, ${location.longitude}, ${DISTANCE})&$format=JSON`
+    ).then((response) => {
+      if (response && response.status === 200) {
+        setAvailability(response.data);
+      }
+    });
+  }, [location]);
+
+  const getCity = useCallback(() => {
+    fetchApi(`/v2/Bike/Station/${city}?$top=15&format=JSON`).then(
+      (response) => {
+        if (response && response.status === 200) {
+          setStationData(response.data);
+        }
+      }
+    );
+    fetchApi(`/v2/Bike/Availability/${city}?$top=15&$format=JSON`).then(
+      (response) => {
+        if (response && response.status === 200) {
+          setAvailability(response.data);
+        }
+      }
+    );
+  }, [city]);
+
   // 一進頁面先取得使用者地理位置
   useEffect(() => {
     getGeoLocation().then(
@@ -47,7 +83,7 @@ export const RentBikeQuery = () => {
         getNearBy();
       }
     }
-  }, [location, city]);
+  }, [location, city, getCity, getNearBy]);
 
   useEffect(() => {
     if (availability && stationData) {
@@ -70,24 +106,6 @@ export const RentBikeQuery = () => {
       setFilterList(list);
     }
   }, [keyWord, list]);
-
-  function getNearBy() {
-    setCity("");
-    fetchApi(
-      `/v2/Bike/Station/NearBy?$top=10&$spatialFilter=nearby(${location.latitude}, ${location.longitude}, ${DISTANCE})&$format=JSON`
-    ).then((response) => {
-      if (response && response.status === 200) {
-        setStationData(response.data);
-      }
-    });
-    fetchApi(
-      `/v2/Bike/Availability/NearBy?$top=10&$spatialFilter=nearby(${location.latitude}, ${location.longitude}, ${DISTANCE})&$format=JSON`
-    ).then((response) => {
-      if (response && response.status === 200) {
-        setAvailability(response.data);
-      }
-    });
-  }
 
   function handleSearch() {
     if (keyWord && keyWord.trim()) {
