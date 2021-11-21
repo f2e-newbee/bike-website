@@ -61,6 +61,7 @@ export const RentBikeQuery = () => {
         }
       }
     );
+    setKeyWord('');
   }, [city]);
 
   // 一進頁面先取得使用者地理位置
@@ -116,23 +117,7 @@ export const RentBikeQuery = () => {
     }
   }
 
-  function getCity() {
-    fetchApi(`/v2/Bike/Station/${city}?$top=15&format=JSON`).then(
-      (response) => {
-        if (response && response.status === 200) {
-          setStationData(response.data);
-        }
-      }
-    );
-    fetchApi(`/v2/Bike/Availability/${city}?$top=15&$format=JSON`).then(
-      (response) => {
-        if (response && response.status === 200) {
-          setAvailability(response.data);
-        }
-      }
-    );
-    setKeyWord('');
-  }
+  
 
   return (
     <>
