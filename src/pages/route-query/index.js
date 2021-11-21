@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { fetchApi } from "../../service/Service";
 import { ReactComponent as RouteIcon } from "../../assets/img/route.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
-import { Paper , Stack, Tabs ,Tab } from "@material-ui/core";
+import { Paper , Stack } from "@material-ui/core";
 import Toggle from "../../components/toggle";
 import SearchBar from "../../components/searchBar/SearchBar";
 import CustomTabs from "../../components/Tabs";
+import SelectCity from "../../components/SelectCity";
 
 
 
@@ -14,8 +15,55 @@ export const RouteQuery = () => {
   let screenWidth = Number(document.body.clientWidth);
   window.addEventListener("resize", function(event) {});
 
+  const [routeData, setRouteData] = useState(null);
+  const [keyWord, setKeyWord] = useState("");
+  const [city, setCity] = useState("Taipei");
+  const [list, setList] = useState([]);
+
+  // 依照關鍵字搜尋的list
+  const [filterList, setFilterList] = useState([]);
+
+  useEffect(() => {
+    getCity();
+  }, [city]);
+
+  function getCity() {
+    if(city){
+      fetchApi(`/v2/Cycling/Shape/${city}?format=JSON`).then(
+        (response) => {
+          if (response && response.status === 200) {
+            setRouteData(response.data);
+          }
+        }
+      );
+      setKeyWord('');
+    }
+  }
+
+  useEffect(() => {
+    if (routeData) {
+      setList(routeData);
+      setFilterList(routeData);
+    }
+  }, [routeData]);
+
+  useEffect(() => {
+    if (!keyWord || !keyWord.trim()) {
+      setFilterList(list);
+    }
+  }, [keyWord, list]);
+
+
+  function handleSearch() {
+    if (keyWord && keyWord.trim() && city) {
+      const filter = list.filter((item) => {
+        return item.RouteName.includes(keyWord);
+      });
+      setFilterList(filter);
+    }
+  }
+
   return (
-    
     <>
     <div className="z-10 relative px-4">
     <Logo className="absolute w-36 md:hidden block top-0"/>
@@ -35,65 +83,34 @@ export const RouteQuery = () => {
               <span>路線查詢</span>
             </Stack>
               <div className="flex mb-4">
-                <button className="bg-purple-custom sm:px-6 px-2 sm:py-2 py-1 rounded-3xl text-white font-bold  sm:w-28 w-24">離我最近</button>
-                <button className="bg-gray-50 sm:px-6 px-2 sm:py-2 py-1 rounded-3xl text-gray-700 font-bold ml-4 sm:w-32 w-28">下拉式選單</button>
+                {/* <button className="bg-purple-custom sm:px-6 px-2 sm:py-2 py-1 rounded-3xl text-white font-bold  sm:w-28 w-24">離我最近</button> */}
+                  <div className="sm:w-32 w-28 flex">
+                    <SelectCity city={city} setCity={setCity} />
+                  </div>
+                  {
+                    city ? null :   <p className="text-red-500 ml-4">**請選擇縣市**</p>
+                  }
               </div>
-              <SearchBar />
+              <SearchBar
+                  setKeyWord={setKeyWord}
+                  keyWord={keyWord}
+                  handleSearch={handleSearch}
+                />
             </div>
             <div className="bg-gray-100  row-span-9  rounded-3xl hidden md:block">
             </div>
             <div className="bg-red-50 row-span-6  rounded-3xl p-5 h-full overflow-y-scroll sm:grid hidden">
-              <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-                <div className="flex justify-between	h-full"> 
-                  <div>
-                    <h3 className="font-bold text-gray-500">站點名稱</h3>
-                    <p className="text-gray-400 text-sm	">全長:100km</p>
-                  </div>
-                  <div className="grid">
-                    <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-                    <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-                  </div>
-                </div>
-              </Paper>
-              <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-                <div className="flex justify-between	h-full"> 
-                  <div>
-                    <h3 className="font-bold text-gray-500">站點名稱</h3>
-                    <p className="text-gray-400 text-sm	">全長:100km</p>
-                  </div>
-                  <div className="grid">
-                    <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-                    <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-                  </div>
-                </div>
-              </Paper>
-              <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-                <div className="flex justify-between	h-full"> 
-                  <div>
-                    <h3 className="font-bold text-gray-500">站點名稱</h3>
-                    <p className="text-gray-400 text-sm	">全長:100km</p>
-                  </div>
-                  <div className="grid">
-                    <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-                    <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-                  </div>
-                </div>
-              </Paper>
-              <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-                <div className="flex justify-between	h-full"> 
-                  <div>
-                    <h3 className="font-bold text-gray-500">站點名稱</h3>
-                    <p className="text-gray-400 text-sm	">全長:100km</p>
-                  </div>
-                  <div className="grid">
-                    <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-                    <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-                  </div>
-                </div>
-              </Paper>
+              <p>共 <span className="font-bold text-primary">{filterList.length} </span>筆資料</p>
+                {
+                  filterList &&  filterList.length > 0 ?
+                  filterList.map((item,index) =>{
+                    return <RouteDataCard data={item} key={`${item.RouteName}${index}`} />
+                  })
+                  : "查無資料QAQ"
+                }
             </div>
             {
-              screenWidth < 480 ?  <CustomTabs /> : null
+              screenWidth < 480 ?  <CustomTabs data={filterList}/> : null
             }
             </div>
           </section>
@@ -103,3 +120,24 @@ export const RouteQuery = () => {
   </>
   );
 };
+
+
+const RouteDataCard  = ({data}) =>{
+  return(
+    <Paper className="w-full min-h-24 my-2 p-4" elevation={2} >
+      <div className="flex justify-between	h-full"> 
+        <div>
+          <h3 className="font-bold text-gray-500">{data.RouteName}</h3>
+          <p className="text-gray-400 text-sm">起點: {data.RoadSectionStart}</p>
+          <p className="text-gray-400 text-sm	">終點: {data.RoadSectionEnd}</p>
+          {
+            data.CyclingLength > 1000 ? 
+            <p className="text-primary text-sm	">全長: {Math.round(data.CyclingLength / 100, -1)} 公里</p>
+            :
+            <p className="text-green text-sm	">全長: <span className="text-green-400">{data.CyclingLength}</span>公尺</p>
+          }
+        </div>
+      </div>
+    </Paper>
+  )
+}

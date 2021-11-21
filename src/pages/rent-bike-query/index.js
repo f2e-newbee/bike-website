@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchApi } from "../../service/Service";
 import { ReactComponent as BikeIcon } from "../../assets/img/bike.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
-import { Paper, Stack, Tabs, Tab } from "@material-ui/core";
+import { Paper, Stack } from "@material-ui/core";
 import Toggle from "../../components/toggle";
 import SearchBar from "../../components/searchBar/SearchBar";
 import CustomTabs from "../../components/Tabs";
@@ -113,6 +113,7 @@ export const RentBikeQuery = () => {
         }
       }
     );
+    setKeyWord('');
   }
 
   return (
@@ -162,6 +163,7 @@ export const RentBikeQuery = () => {
               </div>
               <div className="bg-gray-100  row-span-9  rounded-3xl hidden md:block"></div>
               <div className="bg-yellow-custom row-span-6  rounded-3xl p-5 h-full overflow-y-scroll sm:grid hidden">
+                <p>共 <span className="font-bold text-primary">{filterList.length} </span>筆資料</p>
                 {filterList && filterList.length > 0
                   ? filterList.map((item) => (
                       <RentBikeCard data={item} key={item.StationUID} />

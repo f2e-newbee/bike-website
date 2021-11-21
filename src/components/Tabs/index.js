@@ -6,6 +6,7 @@ import { Paper , Stack, Tabs ,Tab } from "@material-ui/core";
 
 const TabPanel = (props) =>{
   const { children, value, index, ...other } = props;
+
   return (
     <div
       role="tabpanel"
@@ -23,11 +24,12 @@ const TabPanel = (props) =>{
   );
 }
 
-const CustomTabs = () => {
+const CustomTabs = ({data}) => {
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const dataNum = data?.length ? data.length : 0;
 
   return (
     <>
@@ -37,78 +39,26 @@ const CustomTabs = () => {
     </Tabs>
      <div className="relative bg-red-50 row-span-6 rounded-b-3xl overflow-y-scroll sm:hidden grid">
      <TabPanel value={value} index={0} className="p-5">
-       <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-         <div className="flex justify-between	h-full"> 
-           <div>
-             <h3 className="font-bold text-gray-500">站點名稱</h3>
-             <p className="text-gray-400 text-sm	">全長:100km</p>
-           </div>
-           <div className="grid">
-             <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-             <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-           </div>
-         </div>
-       </Paper>
-       <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-         <div className="flex justify-between	h-full"> 
-           <div>
-             <h3 className="font-bold text-gray-500">站點名稱</h3>
-             <p className="text-gray-400 text-sm	">全長:100km</p>
-           </div>
-           <div className="grid">
-             <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-             <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-           </div>
-         </div>
-       </Paper>
-       <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-         <div className="flex justify-between	h-full"> 
-           <div>
-             <h3 className="font-bold text-gray-500">站點名稱</h3>
-             <p className="text-gray-400 text-sm	">全長:100km</p>
-           </div>
-           <div className="grid">
-             <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-             <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-           </div>
-         </div>
-       </Paper>
-       <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-         <div className="flex justify-between	h-full"> 
-           <div>
-             <h3 className="font-bold text-gray-500">站點名稱</h3>
-             <p className="text-gray-400 text-sm	">全長:100km</p>
-           </div>
-           <div className="grid">
-             <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-             <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-           </div>
-         </div>
-       </Paper>   
-       <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-         <div className="flex justify-between	h-full"> 
-           <div>
-             <h3 className="font-bold text-gray-500">站點名稱</h3>
-             <p className="text-gray-400 text-sm	">全長:100km</p>
-           </div>
-           <div className="grid">
-             <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-             <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-           </div>
-         </div>
-       </Paper> 
-       <Paper className="w-full h-24 my-2 p-4" elevation={2} >
-         <div className="flex justify-between	h-full"> 
-           <div>
-             <h3 className="font-bold text-gray-500">站點名稱</h3>
-             <p className="text-gray-400 text-sm	">全長:100km</p>
-           </div>
-           <div className="grid">
-             <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">可借</button>
-             <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">可停</button>
-           </div>
-         </div>
-       </Paper>  
+      <p>共 <span className="font-bold text-primary">{dataNum}</span>筆資料</p>
+       {
+         data && data.map((item,index)=> { 
+          return <Paper className="w-full min-h-24 my-2 p-4" elevation={2} key={`${item.RouteName}${index}`}>
+            <div className="flex justify-between	h-full"> 
+              <div>
+                <h3 className="font-bold text-gray-500">{item.RouteName}</h3>
+                <p className="text-gray-400 text-sm">起點: {item.RoadSectionStart}</p>
+                <p className="text-gray-400 text-sm	">終點: {item.RoadSectionEnd}</p>
+                {
+                  item.CyclingLength > 1000 ? 
+                  <p className="text-primary text-sm	">全長: {Math.round(item.CyclingLength / 100, -1)} 公里</p>
+                  :
+                  <p className="text-green text-sm	">全長: <span className="text-green-400">{item.CyclingLength}</span>公尺</p>
+                }
+              </div>
+            </div>
+          </Paper>
+         })
+       }
      </TabPanel>
      <TabPanel value={value} index={1} className="h-full -mt-4">
        <div className="bg-gray-100 min-h-full h-96 rounded-3xl block">

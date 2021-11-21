@@ -46,6 +46,16 @@ body .css-1ujnqem-MuiTabs-root{
 body .css-1aquho2-MuiTabs-indicator{
   display: none;
 }
+/* 下拉選單 */
+body .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input{
+  padding: 0.5rem 1.5rem;
+}
+body .css-709u9m-MuiFormLabel-root-MuiInputLabel-root{
+  transform: unset;
+  line-height: 1;
+  top: 0.8rem;
+  left: 1rem;
+}
 
 @media screen and (min-width:480px){
   body .css-1ujnqem-MuiTabs-root{
