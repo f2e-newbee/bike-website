@@ -8,13 +8,13 @@ import SearchBar from "../../components/searchBar/SearchBar";
 import CustomTabs from "../../components/Tabs";
 import getGeoLocation from "../../service/GeolocationService";
 import SelectCity from "../../components/SelectCity";
-
+import BikeTab from "./BikeTab";
 
 export const RentBikeQuery = () => {
-   /** 偵測螢幕寬度 */
-   let screenWidth = Number(document.body.clientWidth);
-   window.addEventListener("resize", function(event) {});
-  
+  /** 偵測螢幕寬度 */
+  let screenWidth = Number(document.body.clientWidth);
+  window.addEventListener("resize", function (event) {});
+
   // 常數
   const DISTANCE = 500;
 
@@ -61,7 +61,7 @@ export const RentBikeQuery = () => {
         }
       }
     );
-    setKeyWord('');
+    setKeyWord("");
   }, [city]);
 
   // 一進頁面先取得使用者地理位置
@@ -117,8 +117,6 @@ export const RentBikeQuery = () => {
     }
   }
 
-  
-
   return (
     <>
       <div className="z-10 relative px-4">
@@ -166,16 +164,20 @@ export const RentBikeQuery = () => {
               </div>
               <div className="bg-gray-100  row-span-9  rounded-3xl hidden md:block"></div>
               <div className="bg-yellow-custom row-span-6  rounded-3xl p-5 h-full overflow-y-scroll sm:grid hidden">
-                <p>共 <span className="font-bold text-primary">{filterList.length} </span>筆資料</p>
+                <p>
+                  共{" "}
+                  <span className="font-bold text-primary">
+                    {filterList.length}{" "}
+                  </span>
+                  筆資料
+                </p>
                 {filterList && filterList.length > 0
                   ? filterList.map((item) => (
                       <RentBikeCard data={item} key={item.StationUID} />
                     ))
                   : "查無資料QAQ"}
               </div>
-              {
-                screenWidth < 480 ?  <CustomTabs /> : null
-              }
+              {screenWidth < 480 ? <BikeTab data={filterList} /> : null}
             </div>
           </section>
         </div>
@@ -191,7 +193,7 @@ const RentBikeCard = ({ data }) => {
       <div className="flex justify-between	h-full">
         <div>
           <h3 className="font-bold text-gray-500">{data.StationName.Zh_tw}</h3>
-          <p className="text-gray-400 text-sm	">全長:100km</p>
+          <p className="text-gray-400 text-sm	">更新時間：{data.UpdateTime}</p>
         </div>
         <div className="grid">
           <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">

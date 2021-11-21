@@ -17,7 +17,7 @@ const TabPanel = (props) => {
   );
 };
 
-const CustomTabs = ({ data }) => {
+const BikeTab = ({ data }) => {
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -51,27 +51,20 @@ const CustomTabs = ({ data }) => {
                   <div className="flex justify-between	h-full">
                     <div>
                       <h3 className="font-bold text-gray-500">
-                        {item.RouteName}
+                        {item.StationName.Zh_tw}
                       </h3>
                       <p className="text-gray-400 text-sm">
-                        起點: {item.RoadSectionStart}
+                        更新時間：{item.UpdateTime}
                       </p>
-                      <p className="text-gray-400 text-sm	">
-                        終點: {item.RoadSectionEnd}
-                      </p>
-                      {item.CyclingLength > 1000 ? (
-                        <p className="text-primary text-sm	">
-                          全長: {Math.round(item.CyclingLength / 100, -1)} 公里
-                        </p>
-                      ) : (
-                        <p className="text-green text-sm	">
-                          全長:{" "}
-                          <span className="text-green-400">
-                            {item.CyclingLength}
-                          </span>
-                          公尺
-                        </p>
-                      )}
+                    </div>
+
+                    <div className="grid">
+                      <button className="bg-primary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs mb-1">
+                        可借：{item.AvailableRentBikes}
+                      </button>
+                      <button className="bg-secondary bg-opacity-80 text-white rounded-2xl py-1 w-20 text-xs">
+                        可停：{item.AvailableReturnBikes}
+                      </button>
                     </div>
                   </div>
                 </Paper>
@@ -86,4 +79,4 @@ const CustomTabs = ({ data }) => {
   );
 };
 
-export default CustomTabs;
+export default BikeTab;
