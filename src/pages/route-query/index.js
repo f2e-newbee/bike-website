@@ -35,6 +35,9 @@ export const RouteQuery = () => {
       setKeyWord("");
     }
   }, [city]);
+
+  
+  
   useEffect(() => {
     getCity();
   }, [city, getCity]);
@@ -62,7 +65,17 @@ export const RouteQuery = () => {
   }
 
   function goToDetailPage(item) {
-    navigate(`/route-detail/${item.RouteName}`, { state: { id: 7 }});
+    if (item.City && item.RouteName) {
+      const city = cityList.find(element => element.label === item.City).value;
+      fetchApi(`/v2/Cycling/Shape/${city}`,{
+        $filter: `RouteName eq '${item.RouteName}'`,
+        $format: "JSON",
+      }).then((response) => {
+        if (response && response.status === 200) {
+          navigate(`/route-detail/${item.RouteName}`, { state: response.data});
+        }
+      });
+    }
   }
 
   return (
@@ -164,3 +177,52 @@ const RouteDataCard = ({ data, goToDetailPage }) => {
     </Paper>
   );
 };
+
+
+const cityList = [
+  {
+    label: "臺中市",
+    value: "Taichung",
+  },
+  {
+    label: "新竹市",
+    value: "Hsinchu",
+  },
+  {
+    label: "苗栗縣",
+    value: "MiaoliCounty",
+  },
+  {
+    label: "新北市",
+    value: "NewTaipei",
+  },
+  {
+    label: "屏東縣",
+    value: "PingtungCounty",
+  },
+  {
+    label: "金門縣",
+    value: "KinmenCounty",
+  },
+  {
+    label: "桃園市",
+    value: "Taoyuan",
+  },
+  {
+    label: "臺北市",
+    value: "Taipei",
+  },
+  {
+    label: "高雄市",
+    value: "Kaohsiung",
+  },
+  {
+    label: "臺南市",
+    value: "Tainan",
+  },
+  {
+    label: "嘉義市",
+    value: "Chiayi",
+  },
+];
+

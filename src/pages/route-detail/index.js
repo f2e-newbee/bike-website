@@ -1,15 +1,16 @@
 import React from "react";
-import { ReactComponent as RouteIcon } from "../../assets/img/route.svg";
 import { ReactComponent as Logo } from "../../assets/img/logo.svg";
 import { ReactComponent as LeftArrow } from "../../assets/img/left-arrow.svg";
-
+import { useLocation } from "react-router";
 import { Stack } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Toggle from "../../components/toggle";
 
 
-
 export const RouteDetail = () => {
+  const { state } = useLocation();
+  const routeData = state[0];
+
   return (
     <>
     <div className="z-10 relative px-4">
@@ -25,17 +26,24 @@ export const RouteDetail = () => {
           <div className="md:h-4/5 sm:h-5/6 h-full w-full grid  md:grid-rows-9 md:grid-cols-2  grid-cols-1 gap-4 
               lg:px-20 md:px-12 sm:px-10 px-0 md:py-0 sm:py-6 py-4 pt-0">
             <div className="bg-tertiary-dark row-span-9 rounded-3xl md:text-base text-sm	lg:p-4 p-4 lg:py-4">
-              <Link to="/route-query">
-                <div className="w-6 h-auto cursor-pointer">
-                  <LeftArrow />
-                </div>
-              </Link>
-              <Stack className="text-white md:text-lg text-base mb-2 font-bold" direction="row" spacing={1} justifyContent="center">
-                <RouteIcon className="w-6 h-6" />
-                <span>路線資料</span>
+              
+              <Stack className="text-white md:text-lg text-base mb-2 font-bold" direction="row" spacing={1} justifyContent="between">
+                <Link to="/route-query">
+                  <div className="w-6 h-auto cursor-pointer">
+                    <LeftArrow />
+                  </div>
+                </Link>
               </Stack>
-              <div>
-
+              <div  className="text-center">
+                <h1 className="text-white text-xl font-bold">{routeData.RouteName}</h1>
+                <div className="text-left sm:px-20 px-10 py-10 rounded-3xl text-gray-50 text-lg">
+                  <p><span className="text-gray-100 font-bold">縣市</span> : {routeData.City}</p>
+                  <p><span className="text-gray-100 font-bold">起點</span> : {routeData.RoadSectionStart }</p>
+                  <p><span className="text-gray-100 font-bold">終點</span> : {routeData.RoadSectionEnd}</p>
+                  <p><span className="text-gray-100 font-bold">路線長</span> : {Math.round(routeData.CyclingLength / 100, -1)} 公里</p>
+                  <p><span className="text-gray-100 font-bold">完工日期</span> : {routeData.FinishedTime  }</p>
+                </div>
+              
               </div>
             </div>
             <div className="bg-gray-100  row-span-9  rounded-3xl hidden md:block">
